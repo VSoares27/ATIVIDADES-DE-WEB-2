@@ -14,7 +14,7 @@ class MedicamentoController extends Controller
     public function index()
     {
         $medicamentos = Medicamentos::all();
-        return view('medicamento.index', compact('Medicamento'));
+        return view('medicamentos.index', compact('medicamentos'));
     }
 
     /**
@@ -22,7 +22,7 @@ class MedicamentoController extends Controller
      */
     public function create()
     {
-        return view('medicamento.create');
+        return view('medicamentos.create');
     }
 
     /**
@@ -31,39 +31,40 @@ class MedicamentoController extends Controller
     public function store(Request $request)
     {
         Medicamentos::create($request->all());
-        return redirect()->route('medicamento.create');
+        return redirect()->route('medicamentos.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Medicamentos $medicamentos)
+    public function show(Medicamentos $medicamento)
     {
-        //
+        return view('medicamentos.show', compact('medicamento'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Medicamentos $medicamentos)
+    public function edit(Medicamentos $medicamento)
     {
-        //
+         return view('medicamentos.edit', compact('medicamento'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Medicamentos $medicamentos)
+    public function update(Request $request, Medicamentos $medicamento)
     {
-        //
+        $medicamento->update($request->all());
+        return redirect()->route('medicamentos.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Medicamentos $medicamentos)
+    public function destroy(Medicamentos $medicamento)
     {
-        $medicamentos->delete();
-        return redirect()->route('medicamento.index');
+        $medicamento->delete();
+        return redirect()->route('medicamentos.index');
     }
 }
