@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Author;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as FakerFactory;
@@ -16,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         FakerFactory::create()->unique(true);
         $this->call([
-        categorySeeder::class,
+        CategorySeeder::class,
         AuthorPublisherBookSeeder::class,
         UserBorrowingSeeder::class,
         ]);
