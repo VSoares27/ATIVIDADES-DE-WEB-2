@@ -16,7 +16,7 @@ Este repositório contém atividades práticas desenvolvidas em **Laravel**, seg
   Contém os modelos (`Author`, `Book`, `Category`, `Publisher`) com factories e seeders para popular dados de teste.
 
 - **ATV. 04 - Inclusão de Relacionamento N para N Empréstimo**  
-  Implementação de relacionamento **muitos-para-muitos** para controle de empréstimos entre usuários/livros (pivot table).
+  Implementação de relacionamento **muitos-para-muitos** para controle de empréstimos entre usuários/livros.
 
 - **ATV. 05 - Controllers, Views e Rotas dos CRUDs de Author, Category, Publisher e Book**  
   Contém a implementação completa dos controllers, views em Blade e rotas para todos os recursos, incluindo formulários com `select` e `input` de ID, validação e mensagens de erro.
