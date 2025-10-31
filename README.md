@@ -21,6 +21,8 @@ Este repositório contém atividades práticas desenvolvidas em **Laravel**, seg
 - **ATV. 05 - Controllers, Views e Rotas dos CRUDs de Author, Category, Publisher e Book**  
   Contém a implementação completa dos controllers, views em Blade e rotas para todos os recursos, incluindo formulários com `select` e `input` de ID, validação e mensagens de erro.
 
+- **ATV. 06 - Funcionalidade de Empréstimo**
+  Desenvolvimento da funcionalidade de controle de empréstimos, possibilitando o registro das relações entre usuários e livros, com armazenamento das datas de empréstimo e devolução, além da exibição do histórico de empréstimos de cada usuário.
 ---
 
 ## ⚙️ Instalação e Execução
