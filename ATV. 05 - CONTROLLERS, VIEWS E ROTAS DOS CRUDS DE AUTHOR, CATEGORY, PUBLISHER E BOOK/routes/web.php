@@ -17,10 +17,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/books/create-id-number', [BookController::class, 'createWithId'])->name('books.create.id');
 Route::post('/books/create-id-number', [BookController::class, 'storeWithId'])->name('books.store.id');
 
-Route::resource('books', BookController::class)->except(['create', 'store']);
 
 Route::get('/books/create-select', [BookController::class, 'createWithSelect'])->name('books.create.select');
 Route::post('/books/create-select', [BookController::class, 'storeWithSelect'])->name('books.store.select');
+
+Route::resource('books', BookController::class)->except(['create', 'store']);
 
 Route::resource('categories', CategoryController::class);
 Route::resource('authors', AuthorController::class);

@@ -23,38 +23,40 @@ class PublisherController extends Controller
     {
         $request->validate([
             'name' => 'required|string|unique:publishers|max:255',
+            'address' =>'required|string|unique:publishers|max:255'
         ]);
 
         Publisher::create($request->all());
 
-        return redirect()->route('publishers.index')->with('sucess', 'Categoria criada com sucesso.');
+        return redirect()->route('publishers.index')->with('sucess', 'Editora criada com sucesso.');
     }
 
     public function show(Publisher $publisher)
     {
-        return view('publishers.show', compact('aut$publisher'));
+        return view('publishers.show', compact('publisher'));
     }
 
     public function edit(Publisher $publisher)
     {
-        return view('publishers.edit', compact('aut$publisher'));
+        return view('publishers.edit', compact('publisher'));
     }
 
     public function update(Request $request, Publisher $publisher)
     {
         $request->validate([
-            'name' => 'required|string|unique:publishers,name,' . $publisher->id . '|max:255',
+            'name' => 'required|string|max:255',
+            'address' =>'required|string|max:255'
         ]);
 
         $publisher->update($request->all());
 
-        return redirect()->route('publishers.index')->with('sucess', 'Categoria atualizada com sucesso.');
+        return redirect()->route('publishers.index')->with('sucess', 'Editora atualizada com sucesso.');
     }
 
     public function destroy(Publisher $publisher)
     {
         $publisher->delete();
 
-        return redirect()->route('publishers.index')->with('sucess', 'Categoria deletada com sucesso.');
+        return redirect()->route('publishers.index')->with('sucess', 'Editora deletada com sucesso.');
     }
 }
