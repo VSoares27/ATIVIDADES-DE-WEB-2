@@ -1,4 +1,4 @@
-# Repositório de Atividades Web em Laravel
+# Repositório de Atividades Web 2 em Laravel
 
 Este repositório contém atividades práticas desenvolvidas em **Laravel**, seguindo a sequência de exercícios para aprendizado de CRUD, relacionamentos, migrations, seeders e controllers.
 
