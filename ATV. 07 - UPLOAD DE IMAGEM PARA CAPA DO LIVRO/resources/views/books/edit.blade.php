@@ -4,9 +4,14 @@
 <div class="container">
     <h1 class="my-4">Editar Livro</h1>
 
-    <form action="{{ route('books.update', $book) }}" method="POST">
+    <form action="{{ route('books.update', $book) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+        <div class="mb-3">
+            <label for="cover" class="form-label">Capa</label>
+            <input type="file" id="cover" name="cover" accept="image/*">
+        </div>
+        
         <div class="mb-3">
             <label for="title" class="form-label">Título</label>
             <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title', $book->title) }}" required>
@@ -16,6 +21,7 @@
                 </div>
             @enderror
         </div>
+
 
         <div class="mb-3">
             <label for="publisher_id" class="form-label">Editora</label>

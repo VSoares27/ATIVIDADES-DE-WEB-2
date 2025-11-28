@@ -8,6 +8,7 @@ use App\Models\Publisher;
 use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\HttpCache\Store;
 
 class BookController extends Controller
 {
@@ -20,12 +21,19 @@ class BookController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'cover'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'publisher_id' => 'required|exists:publishers,id',
             'author_id' => 'required|exists:authors,id',
-            'category_id' => 'required|exists:categories,id',
+            'category_id' => 'required|exists:categories,id'
         ]);
 
-        Book::create($request->all());
+        $data = $request->except('cover');
+
+        if ($request->hasFile('cover')) {
+            $data['cover'] = $request->file('cover')->store('covers', 'public');
+        }
+
+        Book::create($data);
 
         return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
     }
@@ -43,12 +51,19 @@ class BookController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'cover'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'publisher_id' => 'required|exists:publishers,id',
             'author_id' => 'required|exists:authors,id',
-            'category_id' => 'required|exists:categories,id',
+            'category_id' => 'required|exists:categories,id'
         ]);
 
-        Book::create($request->all());
+        $data = $request->except('cover');
+
+        if ($request->hasFile('cover')) {
+            $data['cover'] = $request->file('cover')->store('covers', 'public');
+        }   
+
+        Book::create($data);
 
         return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
     }
@@ -69,9 +84,19 @@ class BookController extends Controller
             'publisher_id' => 'required|exists:publishers,id',
             'author_id' => 'required|exists:authors,id',
             'category_id' => 'required|exists:categories,id',
+            'cover'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048'
         ]);
+        
+            $data = $request->except('cover');
 
-        $book->update($request->all());
+            if ($request->hasFile('cover')) {
+                if ($book->cover && \Storage::disk('public')->exists($book->cover)) {
+                    \Storage::disk('public')->delete($book->cover);
+                }
+                $data['cover'] = $request->file('cover')->store('covers', 'public');
+            } 
+
+        $book->update($data);
 
         return redirect()->route('books.index')->with('success', 'Livro atualizado com sucesso.');
     }

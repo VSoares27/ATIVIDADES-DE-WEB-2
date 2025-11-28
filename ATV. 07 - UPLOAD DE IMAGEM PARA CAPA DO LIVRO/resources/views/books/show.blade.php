@@ -9,6 +9,13 @@
             <strong>Título:</strong> {{ $book->title }}
         </div>
         <div class="card-body">
+            <p><strong>Capa:</strong>
+            <img 
+                src="{{ $book->cover ? asset('storage/' . $book->cover) : asset('img/default-cover.png') }}"
+                width="200"
+                alt="Capa do livro {{ $book->title }}"
+            >
+            </p>
             <p><strong>Autor:</strong>
                 <a href="{{ route('authors.show', $book->author->id) }}">
                     {{ $book->author->name }}

@@ -25,7 +25,6 @@ class BookFactory extends Factory
 
             'title' => $this->faker->sentence(),
             'author_id' => Author::factory(),
-            'pages' => $this->faker->numberBetween(50,1024),
             'category_id' => Category::factory(),
             'publisher_id' => Publisher::factory(),
             'published_year' => $this->faker->year
