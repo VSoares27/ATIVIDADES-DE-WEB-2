@@ -10,11 +10,14 @@
         </div>
         <div class="card-body">
             <p><strong>Capa:</strong>
-            <img 
-                src="{{ $book->cover ? asset('storage/' . $book->cover) : asset('img/default-cover.png') }}"
-                width="200"
-                alt="Capa do livro {{ $book->title }}"
-            >
+                @if($book->cover)
+                    <img  src="{{ asset('storage/' . $book->cover) }}"
+                        width="200"
+                        alt="Capa do livro {{ $book->title }}"
+                    >
+                @else
+                    <p>Não foi adicionado nenhuma capa ao livro.</p>
+                @endif
             </p>
             <p><strong>Autor:</strong>
                 <a href="{{ route('authors.show', $book->author->id) }}">
