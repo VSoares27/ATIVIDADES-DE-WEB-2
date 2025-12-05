@@ -23,6 +23,9 @@ Este repositório contém atividades práticas desenvolvidas em **Laravel**, seg
 
 - **ATV. 06 - Funcionalidade de Empréstimo**
   Desenvolvimento da funcionalidade de controle de empréstimos, possibilitando o registro das relações entre usuários e livros, com armazenamento das datas de empréstimo e devolução, além da exibição do histórico de empréstimos de cada usuário.
+
+- **ATV. 07 - Upload de Imagem para Capa do Livro**
+  Implementação da funcionalidade de envio de imagem para a capa do livro durante o cadastro ou edição. Inclui a adição do campo de upload no formulário, validação do arquivo (tipo e tamanho), armazenamento da imagem no diretório apropriado e registro do caminho no banco de dados. A atividade também abrange a exibição da capa nas telas de listagem e detalhes, além da utilização de uma imagem padrão caso nenhuma capa seja enviada.
 ---
 
 ## ⚙️ Instalação e Execução
