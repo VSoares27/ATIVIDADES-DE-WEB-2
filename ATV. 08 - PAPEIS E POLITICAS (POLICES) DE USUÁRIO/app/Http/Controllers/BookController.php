@@ -2,64 +2,128 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Book;
+use App\Models\Publisher;
+use App\Models\Author;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\HttpCache\Store;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function createWithId()
     {
-        //
+        return view('books.create-id');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function storeWithId(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'cover'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'publisher_id' => 'required|exists:publishers,id',
+            'author_id' => 'required|exists:authors,id',
+            'category_id' => 'required|exists:categories,id'
+        ]);
+
+        $data = $request->except('cover');
+
+        if ($request->hasFile('cover')) {
+            $data['cover'] = $request->file('cover')->store('covers', 'public');
+        }
+
+        Book::create($data);
+
+        return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function createWithSelect()
     {
-        //
+        $publishers = Publisher::all();
+        $authors = Author::all();
+        $categories = Category::all();
+
+        return view('books.create-select', compact('publishers', 'authors', 'categories'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Book $book)
+    public function storeWithSelect(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'cover'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'publisher_id' => 'required|exists:publishers,id',
+            'author_id' => 'required|exists:authors,id',
+            'category_id' => 'required|exists:categories,id'
+        ]);
+
+        $data = $request->except('cover');
+
+        if ($request->hasFile('cover')) {
+            $data['cover'] = $request->file('cover')->store('covers', 'public');
+        }   
+
+        Book::create($data);
+
+        return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Book $book)
+        public function edit(Book $book)
     {
-        //
+        $publishers = Publisher::all();
+        $authors = Author::all();
+        $categories = Category::all();
+
+        return view('books.edit', compact('book', 'publishers', 'authors', 'categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Book $book)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'publisher_id' => 'required|exists:publishers,id',
+            'author_id' => 'required|exists:authors,id',
+            'category_id' => 'required|exists:categories,id',
+            'cover'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048'
+        ]);
+        
+            $data = $request->except('cover');
+
+            if ($request->hasFile('cover')) {
+                if ($book->cover && \Storage::disk('public')->exists($book->cover)) {
+                    \Storage::disk('public')->delete($book->cover);
+                }
+                $data['cover'] = $request->file('cover')->store('covers', 'public');
+            } 
+
+        $book->update($data);
+
+        return redirect()->route('books.index')->with('success', 'Livro atualizado com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function show(Book $book)
+    {
+        $book->load(['author', 'publisher', 'category']);
+
+        $users = User::all();
+
+        return view('books.show', compact('book','users'));
+
+    }
+
+    public function index()
+    {
+        $books = Book::with('author')->paginate(20);
+
+        return view('books.index', compact('books'));
+
+    }
+
+    
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+
+        return redirect()->route('books.index')->with('success', 'Livro deletado com sucesso.');
     }
 }
