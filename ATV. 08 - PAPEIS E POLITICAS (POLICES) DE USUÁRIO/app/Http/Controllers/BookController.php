@@ -8,17 +8,20 @@ use App\Models\Publisher;
 use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpKernel\HttpCache\Store;
 
 class BookController extends Controller
 {
     public function createWithId()
     {
+        Gate::authorize('manage-books');
         return view('books.create-id');
     }
 
     public function storeWithId(Request $request)
     {
+        Gate::authorize('manage-books');
         $request->validate([
             'title' => 'required|string|max:255',
             'cover'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -40,6 +43,7 @@ class BookController extends Controller
 
     public function createWithSelect()
     {
+        Gate::authorize('manage-books');
         $publishers = Publisher::all();
         $authors = Author::all();
         $categories = Category::all();
@@ -49,6 +53,7 @@ class BookController extends Controller
 
     public function storeWithSelect(Request $request)
     {
+        Gate::authorize('manage-books');
         $request->validate([
             'title' => 'required|string|max:255',
             'cover'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -70,6 +75,7 @@ class BookController extends Controller
 
         public function edit(Book $book)
     {
+        Gate::authorize('manage-books');
         $publishers = Publisher::all();
         $authors = Author::all();
         $categories = Category::all();
@@ -79,6 +85,7 @@ class BookController extends Controller
 
     public function update(Request $request, Book $book)
     {
+        Gate::authorize('manage-books');
         $request->validate([
             'title' => 'required|string|max:255',
             'publisher_id' => 'required|exists:publishers,id',
@@ -122,6 +129,7 @@ class BookController extends Controller
     
     public function destroy(Book $book)
     {
+        Gate::authorize('manage-books');
         $book->delete();
 
         return redirect()->route('books.index')->with('success', 'Livro deletado com sucesso.');

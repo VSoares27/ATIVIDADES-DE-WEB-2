@@ -37,7 +37,7 @@
                         <a href="{{ route('books.show', $book->id) }}" class="btn btn-info btn-sm">
                             <i class="bi bi-eye"></i> Visualizar
                         </a>
-
+                    @can('manage-books')
                         <!-- Botão de Editar -->
                         <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary btn-sm">
                             <i class="bi bi-pencil"></i> Editar
@@ -51,19 +51,20 @@
                                 <i class="bi bi-trash"></i> Deletar
                             </button>
                         </form>
+                        @endcan        
                     </td>
                 </tr>
-            @empty
+                @empty
                 <tr>
                     <td colspan="4">Nenhum livro encontrado.</td>
                 </tr>
-            @endforelse
-        </tbody>
-    </table>
-
-    <!-- Controles de Paginação -->
-    <div class="d-flex justify-content-center">
-        {{ $books->links() }}
+                @endforelse
+            </tbody>
+        </table>
+        
+        <!-- Controles de Paginação -->
+        <div class="d-flex justify-content-center">
+            {{ $books->links() }}
+        </div>
     </div>
-</div>
 @endsection
