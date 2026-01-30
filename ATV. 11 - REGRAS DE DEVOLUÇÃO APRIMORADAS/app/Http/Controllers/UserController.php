@@ -9,14 +9,14 @@ class UserController extends Controller
 {
     public function index()
     {
-        Gate::authorize('manage-users');
+        Gate::authorize('show-users');
         $users = \App\Models\User::paginate(10);
         return view('users.index', compact('users'));
     }
 
     public function show(\App\Models\User $user)
     {
-        Gate::authorize('manage-users');
+        Gate::authorize('show-users');
         return view('users.show', compact('user'));
     }
 

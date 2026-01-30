@@ -22,6 +22,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role === 'admin';
         });
 
+        Gate::define('show-users', function($user){ // apenas pode ter acesso para gerenciar os usuários
+            return in_array($user->role, ['admin', 'library']);
+        });
+
         Gate::define('manage-books', function ($user) { // apenas pode ter acesso para gerenciar, os usuários e bibliotecario
             return in_array($user->role, ['admin', 'library']);
         });

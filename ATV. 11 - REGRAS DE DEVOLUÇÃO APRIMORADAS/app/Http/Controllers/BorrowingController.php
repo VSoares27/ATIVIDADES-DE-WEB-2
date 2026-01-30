@@ -16,15 +16,22 @@ class BorrowingController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
         
-        if ($user->debit > 0){
-            return redirect()->route('books.show', $book)->with('error', 'Este usuário possui multas pendentes e não pode realizar novos empréstimos.');
+        
+        $count = Borrowing::where('user_id', $request->user_id)->whereNull('returned_at')->count();
+        
+        if ($count >= 5) {
+            return redirect()->route('books.show', $book)->with('error', 'Empréstimo não permitido. O usuário já possui empréstimos em aberto.');
         }
 
-        $count = Borrowing::where('user_id', $request->user_id)->whereNull('returned_at')->count();
+        $bookcurrent = Borrowing::where('user_id', $request->user_id)->where('book_id', $book->id)->whereNull('returned_at')->exists();
+        if($bookcurrent){
+            return redirect()->route('books.show', $book)->with('error', 'O usuário já possui o livro emprestado');
+        }
 
-            if ($count >= 5) {
-                return redirect()->route('books.show', $book)->with('error', 'Empréstimo não permitido. O usuário já possui empréstimos em aberto.');
-            }
+        $user = User::findorFail($request->user_id);
+        if ($user-> debit > 0.00){
+            return redirect()->route('books.show', $book)->with('error', 'Este usuário possui multas pendentes e não pode realizar novos empréstimos.');
+        }
 
             $expecteddate = new DateTime(); 
             $expecteddate->modify('+15 days');

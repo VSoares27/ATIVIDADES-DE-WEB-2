@@ -17,7 +17,7 @@
                     {{ __('You are logged in!') }}
 
                     @if (Auth::user()->role === 'admin' || Auth::user()->role === 'library')
-<br>
+                        <br>
                         <h5 class="mt-3">Administração</h5>
                         <div class="list-group">
                             <a href="{{ route ('authors.index') }}" class="list-group-item list-group-item-action">Gerenciar Autores</a>
