@@ -51,7 +51,7 @@ class BorrowingController extends Controller
             $dayslate = $interval->days;
 
             if ($dayslate > 0){
-                $valueperday = 5.00;
+                $valueperday = 0.50;
                 $totalpenalty = $dayslate * $valueperday;
 
                 $user->debit += $totalpenalty;
